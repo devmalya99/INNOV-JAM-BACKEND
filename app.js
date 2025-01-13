@@ -1,7 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
-const connectDB = require('./DB.JS');
+const connectDB = require('./db.js')
 const app = express();
 const dotenv = require('dotenv');
 const authRoutes = require('./routes/authRoutes.js')
@@ -60,7 +60,7 @@ app.get('/api/db/all-files', async (req, res) => {
     res.json({ files });
   } catch (error) {
     console.error("Error inspecting database:", error);
-    res.status(500).send("Error inspecting the database");
+    res.status(500).send("Error inspecting the database")
   }
 });
 
