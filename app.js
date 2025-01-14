@@ -65,14 +65,6 @@ app.get('/api/db/all-files', async (req, res) => {
 });
 
 
-
-
-
-
-
-
-
-
 app.use('/api/auth', authRoutes)
 app.use('/api', fileRoutes); // Includes upload, create-exam, and other file operations
 // Use the assessment routes

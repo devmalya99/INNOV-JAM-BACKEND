@@ -10,7 +10,7 @@ const uploadToAiApi = async (content) => {
     formData.append("content", content);
 
     const response = await axios.post(
-      "http://192.168.1.24:8000/extract/",
+      "http://175.41.151.78:8000/extract/",
       formData
     );
     console.log("Response from AI API received:", response.data);
