@@ -2,43 +2,56 @@ const { default: mongoose } = require("mongoose");
 const User = require("../Model/UserModel");
 const crypto = require("crypto");
 
-// Create new user (trainer or assessor)
-exports.createUser = async (req, res) => {
-  try {
-    const { email, role, organisation, assignedCourses, assignedAssessments } = req.body;
-   // Validate ObjectId fields
-   
-
-    // Generate a random password
-    const randomPassword = crypto.randomBytes(8).toString("hex");
-
-    const newUser = new User({
-      email,
-      password: randomPassword, // Will be hashed automatically
-      password_org: randomPassword,
-      role,
-      organisation,
-      assignedCourses,
-      assignedAssessments,
-    });
-
-    await newUser.save();
-
-    res.status(201).json({
-      message: `${role} created successfully`,
-      user: {
-        id: newUser._id,
-        email: newUser.email,
-        role: newUser.role,
-        password_org: newUser.password_org,
-        assignedCourses: newUser.assignedCourses,
-        assignedAssessments: newUser.assignedAssessments,
-      },
-    });
-  } catch (error) {
-    res.status(500).json({ message: "Error creating user", error: error.message });
+// Create new users (trainer or assessor)
+exports.createUsers = async (req, res) => {
+    try {
+      const users = req.body; // Expecting an array of user objects
+  
+      // Loop through each user in the array and create a new User instance
+      const createdUsers = [];
+      for (let user of users) {
+        const { email, role,name, organisation, assignedCourses, assignedAssessments } = user;
+  
+        // Validate the fields
+        if (!email || !role) {
+          return res.status(400).json({ message: "Email and role are required" });
+        }
+  
+        // Generate a random password
+        const randomPassword = crypto.randomBytes(8).toString("hex");
+  
+        const newUser = new User({
+          email,
+          name,
+          password: randomPassword, // Will be hashed automatically
+          password_org: randomPassword,
+          role,
+          organisation,
+          assignedCourses,
+          assignedAssessments,
+        });
+  
+        await newUser.save(); // Save each user to the database
+  
+        createdUsers.push({
+          id: newUser._id,
+          email: newUser.email,
+          role: newUser.role,
+          password_org: newUser.password_org,
+          assignedCourses: newUser.assignedCourses,
+          assignedAssessments: newUser.assignedAssessments,
+        });
+      }
+  
+      // Return a response with the created users
+      res.status(201).json({
+        message: "Users created successfully",
+        users: createdUsers,
+      });
+    } catch (error) {
+      res.status(500).json({ message: "Error creating users", error: error.message });
+    }
   }
-};
 
 // Get all users by role
 exports.getUsersByRole = async (req, res) => {
@@ -49,4 +62,4 @@ exports.getUsersByRole = async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: "Error fetching users", error: error.message });
   }
-};
+}
