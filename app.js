@@ -11,6 +11,8 @@ const { init } = require('./socket.js');
 const server = http.createServer(app); // Create HTTP server to work with socket.io
 const io = init(server); // Initialize socket.io and pass it to the module
 const assessmentRoutes = require ('./routes/assessmentRoutes.js')
+const courseRoutes =  require('./routes/courseRoutes.js')
+const userRoutes = require('./routes/userRoutes.js')
 
 // Use CORS to allow your frontend React app to access the backend
 app.use(cors());
@@ -43,8 +45,8 @@ io.on('connection', (socket) => {
 
   socket.on('disconnect', () => {
     console.log('A user disconnected');
-  });
-});
+  })
+})
 
 
 
@@ -70,6 +72,17 @@ app.use('/api', fileRoutes); // Includes upload, create-exam, and other file ope
 // Use the assessment routes
 app.use('/api/assessments', assessmentRoutes)
 
+//course routes
+app.use('/api', courseRoutes); // Prefix all course routes with /api
+
+
+//User routes
+app.use("/api/users", userRoutes)
+
+// Example: Home route to test server
+app.get('/', (req, res) => {
+  res.send('Welcome to the server!');
+})
 
 // Start the server
 const PORT = process.env.PORT || 9100; // Use the PORT from the .env file or default to 5000
