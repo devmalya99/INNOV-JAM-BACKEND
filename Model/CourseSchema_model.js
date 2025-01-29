@@ -50,28 +50,18 @@ const CourseSchema = new mongoose.Schema(
         ],
         default: [],
       },
-    assigned_trainers: [
-      {
-        trainerId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
-        name: { type: String,  },
-        email: { type: String,  },
-      },
-    ],
-    assigned_learners: [
-      {
-        learnerId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
-        name: { type: String,  },
-        email: { type: String,  },
-        enrollmentDate: { type: Date, default: Date.now }, // Tracks when they were added
-      },
-    ],
-    assigned_evaluators: [
-      {
-        evaluatorId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
-        name: { type: String,  },
-        email: { type: String,  },
-      },
-    ],
+    assigned_trainers: {
+      type: [String], // Array of strings
+      default: []
+    },
+    assigned_learners: {
+      type: [String], // Array of strings
+      default: []
+    },
+    assigned_evaluators: {
+      type: [String], // Array of strings
+      default: []
+    },
     uploaded_courseware: [
       {
         documentId: { type: mongoose.Schema.Types.ObjectId, ref: "Document" },
