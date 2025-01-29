@@ -53,6 +53,21 @@ exports.createUsers = async (req, res) => {
     }
   }
 
+
+// Get all users
+exports.getAllUsers = async (req, res) => {
+  try {
+    // Fetch all users from the database
+    const users = await User.find();  // Corrected the User.find() call
+    res.status(200).json(users);
+  } catch (error) {
+    res.status(500).json({ message: "Error fetching users", error: error.message });
+  }
+};
+
+
+
+
 // Get all users by role
 exports.getUsersByRole = async (req, res) => {
   try {
