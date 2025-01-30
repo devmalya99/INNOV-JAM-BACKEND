@@ -23,6 +23,7 @@ const CourseSchema = new mongoose.Schema(
       required: true,
       trim: true,
     },
+    
     assessments: [
       {
         name: {
@@ -40,16 +41,18 @@ const CourseSchema = new mongoose.Schema(
         },
       },
     ],
+
     gradingSystem: {
-        type: [
-          {
-            grade: { type: String }, // e.g., "A", "B", "C"
-            minPercentage: { type: Number }, // Minimum percentage for the grade
-            maxPercentage: { type: Number }, // Maximum percentage for the grade
-          },
-        ],
-        default: [],
-      },
+      type: [
+        {
+          grade: { type: String }, // e.g., "A", "B", "C"
+          minPercentage: { type: Number }, // Minimum percentage for the grade
+          maxPercentage: { type: Number }, // Maximum percentage for the grade
+        },
+      ],
+      default: [],
+    },
+
     assigned_trainers: {
       type: [String], // Array of strings
       default: []
@@ -62,29 +65,30 @@ const CourseSchema = new mongoose.Schema(
       type: [String], // Array of strings
       default: []
     },
+
     uploaded_courseware: [
       {
         documentId: { type: mongoose.Schema.Types.ObjectId, ref: "Document" },
-        filename: { type: String,  },
+        filename: { type: String },
         url: { type: String, trim: true }, // File download or preview link
       },
     ],
     resources: [
       {
-        title: { type: String,  trim: true },
-        url: { type: String,  trim: true },
+        title: { type: String, trim: true },
+        url: { type: String, trim: true },
       },
     ],
+
     organisationName: {
       type: String,
-     
       trim: true,
     },
     createdBy: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User", // Tracks the creator of the course
-      
     },
+
     status: {
       type: String,
       enum: [
@@ -105,6 +109,7 @@ const CourseSchema = new mongoose.Schema(
       type: [String],
       default: [], // Useful for categorizing and searching courses
     },
+
     startDate: {
       type: Date,
       default: null, // For scheduling
@@ -113,6 +118,24 @@ const CourseSchema = new mongoose.Schema(
       type: Date,
       default: null,
     },
+
+    competent_learners: {
+      type: [String], // Array of learner emails marked as competent
+      default: []
+    },
+    total_enrollment_count: {
+      type: Number, // Total number of enrolled learners
+      default: 0
+    },
+    submission_completed: {
+      type: [String], // Array of learner emails who completed submissions
+      default: []
+    },
+    examScheduleDate: {
+      type: Date, // Date for scheduling exams
+      default: null
+    },
+
     createdAt: {
       type: Date,
       default: Date.now,

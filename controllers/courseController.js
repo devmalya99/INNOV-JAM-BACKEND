@@ -3,7 +3,16 @@ const Course = require('../Model/CourseSchema_model'); // Import the Course mode
 // Create a new course
 exports.createCourse = async (req, res) => {
   try {
-    const { courseName, description, category, assessments, organisationName, status, assigned_trainers, assigned_learners, assigned_evaluators, resources } = req.body;
+    const { courseName, 
+      description, category, assessments, 
+      organisationName, status, 
+      assigned_trainers, 
+      assigned_learners, 
+      assigned_evaluators, 
+      resources ,
+      examScheduleDate
+    
+    } = req.body;
 
     // Create new course
     const newCourse = new Course({
@@ -17,6 +26,7 @@ exports.createCourse = async (req, res) => {
       assigned_learners,
       assigned_evaluators,
       resources,
+      examScheduleDate
     });
 
     const savedCourse = await newCourse.save();
@@ -37,6 +47,28 @@ exports.getAllCourses = async (req, res) => {
       res.status(500).json({ error: 'Failed to fetch courses' });
     }
   };
+
+
+  // Fetch a single course by ID
+exports.getCourseById = async (req, res) => {
+  try {
+    const { courseId } = req.params;
+
+    const course = await Course.findById(courseId);
+
+    if (!course) {
+      return res.status(404).json({ error: 'Course not found' });
+    }
+
+    res.status(200).json(course);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Failed to fetch course' });
+  }
+};
+
+
+
 
 // Edit existing course assessment details
 exports.editAssessment = async (req, res) => {
