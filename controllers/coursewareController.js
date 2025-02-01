@@ -28,6 +28,7 @@ exports.uploadCourseware = async (req, res) => {
     }
 };
 
+
 // Get all courseware
 exports.getAllCourseware = async (req, res) => {
     try {
