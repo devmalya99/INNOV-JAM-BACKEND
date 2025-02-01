@@ -11,8 +11,9 @@ const { init } = require('./socket.js');
 const server = http.createServer(app); // Create HTTP server to work with socket.io
 const io = init(server); // Initialize socket.io and pass it to the module
 const assessmentRoutes = require ('./routes/assessmentRoutes.js')
-const courseRoutes =  require('./routes/courseRoutes.js')
+const courseRoutes =  require('./routes/courseRoutes')
 const userRoutes = require('./routes/userRoutes.js')
+const courswareRoutes = require('./routes/coursewareRoutes.js')
 
 // Use CORS to allow your frontend React app to access the backend
 app.use(cors());
@@ -78,6 +79,11 @@ app.use('/api', courseRoutes); // Prefix all course routes with /api
 
 //User routes
 app.use("/api/users", userRoutes)
+
+// Courseware route
+
+app.use("/api/files", courswareRoutes)
+
 
 // Example: Home route to test server
 app.get('/', (req, res) => {

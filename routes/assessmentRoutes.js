@@ -3,7 +3,7 @@ const router = express.Router();
 const Assessment = require("../Model/assessment_model"); // Import the Assessment model
 const assessmentController = require("../controllers/assessmentController");
 const { updateFinalEvaluatedData } = require('../controllers/assessmentController');
-
+const Assessments = require("../Model/assessment_model"); // Import your model
 
 // Route to fetch all assessments
 router.get("/", async (req, res) => {
@@ -19,6 +19,7 @@ router.get("/", async (req, res) => {
 });
 
 // Route to fetch a specific assessment by ID
+//----------------------------------------------
 router.get("/:id", async (req, res) => {
   const { id } = req.params;
   try {
@@ -36,6 +37,30 @@ router.get("/:id", async (req, res) => {
       .json({ message: "Error fetching assessment", error: error.message });
   }
 });
+
+
+// Get all assessments for a given courseId
+//------------------------------------------
+
+router.get("/all/:courseId", async (req, res) => {
+  try {
+    const { courseId } = req.params;
+
+    // Find assessments that match the given courseId
+    const assessments = await Assessment.find({ courseId });
+
+    if (!assessments.length) {
+      return res.status(404).json({ message: "No assessments found for this course." });
+    }
+
+    res.status(200).json(assessments);
+  } catch (error) {
+    console.error("Error fetching assessments:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+
 
 // Route to save student's answer for a specific question
 router.put(
