@@ -31,7 +31,7 @@ exports.uploadCourseware = async (req, res) => {
 // Get all courseware
 exports.getAllCourseware = async (req, res) => {
     try {
-        const courseware = await Courseware.find().populate('course_id assessment_id'); // Populate related course and assessment data
+        const courseware = await Courseware.find()
         res.status(200).json(courseware);
     } catch (err) {
         res.status(500).json({ message: 'Error fetching courseware', error: err.message });

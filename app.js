@@ -82,7 +82,7 @@ app.use("/api/users", userRoutes)
 
 // Courseware route
 
-app.use("/api/files", courswareRoutes)
+app.use("/api/courseware", courswareRoutes)
 
 
 // Example: Home route to test server

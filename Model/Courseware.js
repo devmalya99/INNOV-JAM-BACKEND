@@ -17,11 +17,11 @@ const coursewareSchema = new mongoose.Schema({
   course_id: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Course', // Reference to the Course model
-    required: true,
+    required: false,
   },
   course_name: {
     type: String, // Name of the assessment
-    required: true,
+    required: false,
   },
   assessment_name: {
     type: String, // Name of the assessment
