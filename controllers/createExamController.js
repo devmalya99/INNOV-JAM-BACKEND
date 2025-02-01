@@ -23,7 +23,12 @@ const uploadToAiApi = async (content) => {
 
 exports.createExam = async (req, res) => {
   const { id } = req.params;
-  const { course_id, course_name } = req.body; // Extract from request body
+  const { 
+    course_id, 
+    course_name,
+    assessmentName
+
+   } = req.body; // Extract from request body
 
   console.log("Received course id:", course_id);
   console.log("Received course name:", course_name);
@@ -76,10 +81,12 @@ exports.createExam = async (req, res) => {
     }));
 
     const newAssessment = new Assessment({
+      assessment_name:assessmentName,
       assessment_type,
       case_study_context,
       courseId: course_id,
       course_name: course_name,
+      
       data: enrichedQuestions,
     });
 

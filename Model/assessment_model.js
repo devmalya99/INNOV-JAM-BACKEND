@@ -21,6 +21,7 @@ const questionSchema = new mongoose.Schema({
 });
 
 const assessmentSchema = new mongoose.Schema({
+  assessment_name: { type: String, required: true }, // Added assessment name
   assessment_type: { type: String, required: true },
   case_study_context: { type: String },
   courseId: { type: mongoose.Schema.Types.ObjectId, ref: 'courses', required: true }, // Reference to Course
