@@ -77,6 +77,7 @@ exports.createExam = async (req, res) => {
       longformer_score: null,
       feedback: "",
       human_assess_remarks: null,
+      isCompetent: false,
 
     }));
 
