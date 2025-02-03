@@ -18,11 +18,17 @@ const questionSchema = new mongoose.Schema({
   gemini_score: { type: Number, default: null },
   feedback: { type: String, default: '' },
   human_assess_remarks: { type: String, default: null },
+  isCompetent: { type: Boolean, default: false }, // Mark if competent or not
 });
 
 const assessmentSchema = new mongoose.Schema({
+  assessment_name: { type: String, required: true }, // Added assessment name
   assessment_type: { type: String, required: true },
   case_study_context: { type: String },
+  courseId: { type: mongoose.Schema.Types.ObjectId, ref: 'courses', required: true }, // Reference to Course
+  assessment_file_id: { type: mongoose.Schema.Types.ObjectId, ref: 'files' }, // Reference to Uploaded File
+  course_name: { type: String }, // Course Name (if needed for quick lookup)
+
   data: [questionSchema],
 });
 

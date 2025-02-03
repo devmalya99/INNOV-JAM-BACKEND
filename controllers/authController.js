@@ -52,4 +52,4 @@ const verifyToken = (req, res) => {
   });
 };
 
-module.exports = { loginUser, verifyToken };
+module.exports = { loginUser, verifyToken }
